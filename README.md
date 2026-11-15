@@ -1,45 +1,15 @@
-# Codewise — AI Code Review
+Code Reviewer
+live-->https://code-reviwer-1-xsi4.onrender.com/
 
-A small React code editor paired with an Express API that sends code to Gemini for a structured review.
-
-## Requirements
-
-- Node.js 20 or newer
-- A Google Gemini API key
-
-## Configure
-
-Copy `BackEnd/.env.example` to `BackEnd/.env` and set `GOOGLE_GEMINI_KEY` to your key. The `.env` file is ignored by Git.
-
-## Run locally
-
-In one terminal:
-
-```sh
-cd BackEnd
-npm install
-npm start
-```
-
-In another terminal:
-
-```sh
-cd Frontend
-npm install
-npm run dev
-```
-
-Open the local URL printed by Vite. The frontend proxies review requests to the API on port 3000.
-
-The API health check is available at `http://localhost:3000/health`.
-
-## Deploy to Render
-
-Deploy the frontend and backend together as one Render **Web Service**:
-
-- **Root Directory:** leave blank (repository root)
-- **Build Command:** `cd Frontend && npm ci && npm run build && cd ../BackEnd && npm ci`
-- **Start Command:** `cd BackEnd && npm start`
-- **Environment Variables:** set `GOOGLE_GEMINI_KEY` to your Gemini API key and `GEMINI_MODEL` to `gemini-3.5-flash`
-
-The Express server serves the built frontend and the `/ai` API from the same Render URL. Add the API key in Render's Environment settings; never commit `BackEnd/.env`.
+Code Reviewer is a web app that uses Google Gemini to analyze code and provide clear, actionable feedback. Paste code into the editor and click Review code to see suggestions in the review panel.
+Features
+- AI code reviews: Highlights potential bugs, security risks, performance issues, readability problems, and coding-style improvements.
+- Multiple programming languages: Gemini reviews the code based on its contents. The editor currently labels and highlights code as JavaScript.
+- Readable feedback: Displays the review as formatted Markdown, including explanations and example improvements.
+- Input validation: Prompts users to add code before submitting an empty review request.
+- Request feedback: Shows a loading state while Gemini works and provides an error message if the service is unavailable or takes too long.
+- Backend API: A Node.js and Express server handles review requests and keeps the Gemini API key on the server.
+- Health endpoint: /health reports whether the backend is running.
+- Render deployment: The Express server can serve the built frontend and API from one Render web service.
+What it does
+The app sends the code from the editor to the backend. The backend asks Gemini to review it and returns the suggestions to the frontend, where they appear beside the editor. The API key is configured as an environment variable and should not be committed to the repository.
